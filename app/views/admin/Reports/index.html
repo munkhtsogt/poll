@@ -1,0 +1,46 @@
+#{extends 'admin/main.html' /}
+
+#{set title: 'Admin/Report' /}
+
+<a href='javascript:;' onclick="generate('answer');" class="btn btn-success">Generate report by answers</a>
+<a href='javascript:;' onclick="generate('voters');" class="btn btn-primary">Generate report by voters</a>
+
+<br>
+<br>
+<table class="table table-bordered">
+	<tr>
+		<th>
+			Total voters
+		</th>
+		<th>
+			A number of polls
+		</th>
+		<th>
+			A number of comments
+		</th>
+	</tr>
+	<tbody id="reports">
+		<tr>
+			<td id="voters">
+			</td>
+			<td id="polls">
+			</td>
+			<td id="comments">
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<script type="text/javascript">
+<!--
+	$(function(){
+		generate = function(type){
+			$.post('@{ admin.Reports.report }', {type: type}, function(response){
+				$('#voters').html(response.totalVoters);
+				$('#polls').html(response.numberOfPolls);
+				$('#comments').html(response.numberOfComments);
+			})
+		}
+	})
+-->
+</script>

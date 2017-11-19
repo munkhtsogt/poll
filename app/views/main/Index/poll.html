@@ -1,0 +1,131 @@
+<script type="text/javascript">
+<!--
+$(function(){
+        
+	  var parameters = [];
+	  var values = [];
+	  %{for(int i=0; i<poll.answers.size(); i++) { }%
+		  parameters.push("${poll.answers.get(i).name}");
+	  	  values.push(parseInt("${poll.answers.get(i).vote}", 10));
+	  %{ } }%
+	  
+	  drawCanvas(parameters, values);
+	  
+	  function drawCanvas(parameters, values)
+	  {
+		  $('#div').poll({
+		      width: 500,
+		      height: 125 * (parameters.length + 1),
+		      parameters: parameters,
+		      values: values,
+		      response: function(vote){
+		        $.post("@{ main.Index.vote }", {pollId: "${poll.id}", vote:vote}, function(response){
+		        	var parameters = [];
+	  				var values = [];
+	  				for(var i=0; i < response.answers.length; i++){
+	  					parameters.push(response.answers[i].name);
+	  					values.push(response.answers[i].vote);
+	  				}
+		        	drawCanvas(parameters, values); 
+		        }, 'json')
+		      }  
+		  });		  
+	  }	
+	
+	$('#comment-form button[type="submit"]').click(function(){
+		var comment = $('#comment-form textarea[name="comment"]').val();
+		if(comment.length == 0){
+			$('#comment-form textarea[name="comment"]').focus();
+			return 0;
+		}
+		
+		$.post("@{ main.Index.addComment }", {pollId: "${poll.id}", comment: comment}, function(response){
+			var div = '<div class="dialogbox">' + 
+				    	'<div class="body">' +
+				      		'<span class="tip tip-up"></span>' +
+				      		'<div class="message">' +
+				      			 response.comment +
+				      		'</div>' +
+			      		'</div>' +
+		      		'</div>';
+			$('#comments').prepend(div);
+		});
+  	})
+			
+});
+-->
+</script>
+
+<table width="100%" class="gridtable">
+	<tr>
+		<th>
+			Category name
+		</th>
+		<td>
+			${poll.category.name}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			Name
+		</th>
+		<td>
+			${poll.name}
+		</td>
+	</tr>
+	<tr>
+		<th>
+			Description
+		</th>
+		<td>
+			${poll.description}
+		</td>
+	</tr>
+</table>
+<br />
+<div id="div"></div>
+<h2>Comments</h2>
+<form id="comment-form" onsubmit="return false;">
+	<textarea name="comment"></textarea>
+	<br>
+	<button type="submit">Submit</button>
+</form>
+
+<div id="comments" class="container" align="center">
+	#{list comments, as: 'comment'}
+	<div class="dialogbox">
+    	<div class="body">
+      		<span class="tip tip-up"></span>
+      		<div class="message">
+				${comment.comment}
+			</div>
+		</div>
+	</div>
+	#{/list}
+</div>
+
+<!-- CSS goes in the document HEAD or added to your external stylesheet -->
+<style type="text/css">
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+</style>

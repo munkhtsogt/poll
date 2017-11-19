@@ -1,0 +1,45 @@
+#{extends 'admin/main.html' /}
+
+#{set title: "Admin/Company" /}
+
+<h2> Company information </h2>
+<br />
+<form action="@{ update() }" method="POST" enctype="multipart/form-data" class="well">
+	<legend>Company information</legend>
+	<table width="100%">
+		<tr>
+			<td>Name:</td>
+			<td>
+				<input type="text" maxlength="100" name="companyName" 
+					value="${ config.companyName }" />
+			</td>
+		</tr>
+		<tr>
+			<td>Language: </td>
+			<td>
+				<select name="language" class="selection-mid">
+					<option value="en" 
+						#{if config.language && config.language == "en" } selected="selected" #{/if}>English</option>
+					<option value="mn" 
+						#{if config.language && config.language == "mn" } selected="selected" #{/if}>Монгол</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Logo: </td>
+			<td>
+				<div>
+					<img src="/public/images/logos/${ config.companyLogo }" 
+						height="50" />
+				</div>
+				<br />
+				<input type="file" name="companyLogo" />
+			</td>
+			<td></td>
+		</tr>
+	</table>
+	 <div align="right">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="reset" class="btn">Clear</button>
+    </div>
+</form>

@@ -1,0 +1,15 @@
+Hello, ${ user.email },
+You have a new email from NUM.
+
+${subject}
+----------------------------------
+${body}
+
+Date: ${date}
+
+Please login using info:    
+        Email: ${user.email}
+        Password: ${user.password}
+        http://localhost:9000
+
+Thank you! NUM.

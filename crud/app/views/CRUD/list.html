@@ -1,0 +1,32 @@
+#{extends 'admin/main.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+	
+	<p id="crudListAdd">
+ 		<table width="100%">
+ 			<tbody>
+ 				<tr>
+ 					<td align="right">
+ 						<a href="@{blank()}" class="btn btn-success" >&{'crud.add', type.modelName}</a>
+ 					</td>
+ 				</tr>
+ 			</tbody>
+ 		</table>
+	</p>
+	
+    <div id="crudListSearch">
+        #{crud.search /}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.table /}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>
+
+</div>

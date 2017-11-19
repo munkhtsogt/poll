@@ -1,0 +1,8 @@
+data
+tmp
+eclipse
+.metadata
+.settings
+.project
+*.pyc
+configdb

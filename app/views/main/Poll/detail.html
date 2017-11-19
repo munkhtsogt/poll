@@ -1,0 +1,42 @@
+<form class="well">
+	<table width="100%" class="table table-bordered">
+		<tr>
+			<td>
+				Category name
+			</td>
+			<td>
+				${poll.category.name}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Name
+			</td>
+			<td>
+				${poll.name}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Description
+			</td>
+			<td>
+				${poll.description}
+			</td>
+		</tr>
+		%{
+			for(int i=0; i<poll.parameters.length; i++) {
+		}%
+			<tr>
+				<td>
+					Parameter #${i + 1}
+				</td>
+				<td>
+					${poll.parameters[i]}
+				</td>
+			</tr>
+		%{
+			}
+		}%
+	</table>
+</form>

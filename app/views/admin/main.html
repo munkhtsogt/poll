@@ -1,0 +1,36 @@
+#{extends 'admin/generic.html' /}
+
+#{set 'menu' }
+	<header class="jumbotron subhead" id="overview">
+	  <div class="subnav-fixed">
+	    <ul class="nav nav-pills">
+	      <li #{if request.path.equals('/admin/company') } class="active" #{/if}>
+	        <a href="@{ admin.Company.index }">Company</a>
+	      </li>  
+	      <li #{if request.path.equals('/admin/menu') } class="active" #{/if}>
+	        <a href="@{ admin.Menu.index }">Category</a>
+	      </li>
+	      <li #{if request.path.equals('/admin/polls') } class="active" #{/if}>
+	        <a href="@{ admin.Polls.index }">Polls</a>
+	      </li>
+	      <li #{if request.path.equals('/admin/users') } class="active" #{/if}>
+	        <a href="@{ admin.Users.index }">Users</a>
+	      </li>
+	      <li #{if request.path.equals('/admin/banners/list') } class="active" #{/if}>
+	        <a href="@{ admin.Banners.list }">Banners</a>
+	      </li>
+	      <li #{if request.path.equals('/admin/comments/list') } class="active" #{/if}>
+	        <a href="@{ admin.Comments.list }">Comments</a>
+	      </li>
+	      <li #{if request.path.equals('/admin/news') } class="active" #{/if}>
+	        <a href="@{ admin.News.index }">News</a>
+	      </li>
+	      <li #{if request.path.equals('/admin/reports') } class="active" #{/if}>
+	        <a href="@{ admin.Reports.index }">Report</a>
+	      </li>
+	    </ul>
+	  </div>
+	</header>
+#{/set}
+
+#{doLayout /}

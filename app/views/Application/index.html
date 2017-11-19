@@ -1,0 +1,176 @@
+﻿#{extends 'generic.html' /}
+
+#{set title:'Home' /}
+
+<body>
+        <div id="wrapper">
+            <div id="leftCol">
+                <div class="block">
+                    <div class="branding">
+                    	#{if config }
+                    		<img src="/public/images/logos/${ config.companyLogo }" width="45" />
+                    		<a href="@{ Application.index}">${ config?.companyName }</a>
+                    	#{/if}
+                    </div>
+                    <div id="search-site">
+                        <input type="text" class="input-text" />
+                    </div>
+                    <div class="category-menu">
+                    	<div class="accordion open">
+                    		<div class="accordion-title" menu-id="0">
+                    			<b>News</b>
+                    		</div>
+                    	</div>
+						#{list menus, as: 'menu'}
+                        <div class="accordion">
+                            <div class="accordion-title" menu-id="${menu.id}"><b>${menu.name}</b></div>
+                            <div class="accordion-content">
+                                <ul class="sub-menu">
+                                </ul>
+                            </div>
+                        </div>
+                        #{/list}
+                    </div>
+                </div>
+            </div>
+			<div id="bodyCol">
+		        <div id="topbar">
+		            <div id="topbar-inner" class="clearfix">
+		                <div class="welcome-msg">
+		                	#{if session.get("user") == null}
+		                		<a href="javascript:;" onclick="login();">Login</a>
+		                		<a href="javascript:;" onclick="signup();">Signup</a>
+		                	#{/if}
+		                	#{else}
+		                		Hello!, ${session.get("user")} 
+		                		#{if  session.get("user") == 'admin' }
+		                			| <a href="@{ admin.Index.index }" target="_bkank">Panel</a>
+		                		#{/if}
+		                		| <a href="@{ logout() }">logout</a>
+		                	#{/else}
+		                </div>
+		            </div>
+		        </div>
+		        ﻿<div id="banner-container">
+				    <div>
+				        <div id="banner-slides-container">
+				
+				            <script type="text/javascript">
+				                $(function() {
+				                    $('#banner-slides').cycle({
+				                        fx: 'scrollLeft',
+				                        timeout: 5000,
+				                        speed: 500,
+				                        prev: '#arrow-left',
+				                        next: '#arrow-right',
+				                        pause:1	
+				                    });
+				                });
+				            </script>
+				
+				            <a href="#" id="arrow-left"></a>
+				            <a href="#" id="arrow-right"></a>
+				
+				            <div id="banner-slides">
+				            	#{list banners, as: 'banner'}
+					                <div>
+					                    <a class="grid-oc slider-content" href="#">
+					                        <img src="@{main.Index.getBannerPicture(banner.id)}" alt="" />
+					                        <div class="slider-info">
+					                            <span class="button button-yellow" style="position:absolute;right:20px;bottom:20px;">
+					                            	more
+					                            </span>
+					                            <h2>${banner.name}</h2>
+					                            <p>${banner.description}</p>
+					                        </div>
+					                    </a>
+					                </div>
+				          		#{/list}
+				            </div>
+				        </div>
+				    </div>
+				</div>
+		        <div id="content">
+		        </div>  
+	    	</div>
+    	</div>
+</body>		     
+<script type="text/javascript">
+<!--
+
+	uPoll = function(elem){
+		if($('.accordion').hasClass('open')) {
+			$('.accordion').removeClass('open');
+		}
+		$('.sub-menu').find('li div').each(function(){
+			$(this).removeClass("chosen");
+		});
+		
+		$(elem).parent().attr('class', 'chosen');
+		$.post('@{ main.Poll.index }', function(response){
+			$('#content').empty();
+			$('#content').append(response);
+		});
+	}
+	login = function(){
+		$.colorbox({
+			href: '@{ login }',
+			width: "50%",
+			height: "50%",
+			onCleanup: function(){
+				
+			}
+		})
+	}
+	
+	signup = function(){
+		$.colorbox({
+			href: '@{ signup }',
+			width: "50%",
+			height: "50%",
+			onCleanup: function(){
+				
+			}
+		})
+	}
+	
+	$.post('@{ main.Index.news }', function(response){
+		$('#content').empty();
+		$('#content').append(response);
+	})
+	
+	$("div.accordion-title").click(function(){
+		var menuId = $(this).attr("menu-id");
+		$.post('@{ main.Index.subs }', { menuId: menuId }, function(response){
+			$('.sub-menu').empty();
+			$('.sub-menu').append(response);
+		});
+		if(!$(this).parent('.accordion').hasClass('open')) {
+		
+			$('.accordion').removeClass('open');
+			
+			#{if session.get("user") }
+				$('#create').removeClass('chosen');
+			#{/if}
+			$('.accordion-content').slideUp();
+	
+			$(this).parent('.accordion').toggleClass('open');
+	
+			$(this).next('.accordion-content').slideDown(400);
+		}
+		
+		if(menuId == 0){
+			$.post('@{ main.Index.news }', function(response){
+				$('#content').empty();
+				$('#content').append(response);
+			})
+		}
+		else {
+			$.post('@{ main.Index.polls }', { menuId: menuId }, function(response){
+				$('#content').empty();
+				$('#content').append(response);
+			})		
+		}
+	});
+-->
+</script>

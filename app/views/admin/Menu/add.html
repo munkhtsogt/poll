@@ -1,0 +1,46 @@
+<form id="add" onsubmit="return false;" class="well">
+	<table width="100%">
+		<tr>
+			<td>
+				Name
+			</td>
+			<td>
+				<input type="hidden" name="menuId" value="${menuId}" />
+				<input type="text" name="name" />
+				<div id="error">
+				</div>
+			</td>
+		</tr>
+		<tfoot>
+			<tr>
+				<td>
+					&nbsp;
+				</td>
+				<td align="right">
+					<button type="submit" class="btn btn-primary">Save</button>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</form>
+
+<script type="text/javascript">
+<!--
+	$('#add button[type="submit"]').click(function(){
+		var menuId = $('#add input[name="menuId"]').val();
+		var name = $.trim($('#add input[name="name"]').val());
+		if(name == ""){
+			$('#add input[name="name"]').attr("style", "border-color:red");
+			var p = document.createElement("p");
+			$(p).attr("style", "color: red");
+			$(p).html("Name must be specified!");
+			$('#error').empty();
+			$('#error').append(p);
+			return false;
+		}
+		$.post('@{ addImp }', { menuId:menuId, name:name }, function(response){
+			$.colorbox.close();
+		});
+	});
+-->
+</script>

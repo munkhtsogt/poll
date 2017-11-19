@@ -1,0 +1,4 @@
+models.User():
+    email: "admin"
+    password: "admin"
+    isAdmin: true

@@ -1,0 +1,178 @@
+<form id="edit" onsubmit="return false;" class="well">
+	<table width="100%">
+		<tr>
+			<td colspan="3" align="right">
+				<a href="javascript:;" onclick="Delete();" title="delete">
+					<i class="icon-trash icon-large"></i>
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td width="5%">
+				&nbsp;
+			</td>
+			<td>
+				Category
+			</td>
+			<td>
+				<input type="hidden" name="pollId" value="${poll.id}"/>
+				<input type="text" name="category" value="${poll.category.name}" menu-id="${poll.category.id}"/>
+			</td>
+		</tr>
+		<tr>
+			<td width="5%">
+				&nbsp;
+			</td>
+			<td>
+				Poll name
+			</td>
+			<td>
+				<input type="text" name="name" value="${poll.name}"/>
+			</td>
+		</tr>
+		<tr>
+			<td width="5%">
+				&nbsp;
+			</td>
+			<td>
+				Description
+			</td>
+			<td>
+				<textarea name="description">${poll.description}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td width="5%">
+				<a href="javascript:;" onclick="add();" title="add more">
+					<i class="icon-plus"></i>
+				</a>
+			</td>
+			<td>
+				Parameter #1
+			</td>
+			<td>
+				<input type="text" name="parameter" value="${poll.answers.get(0).name}"/>
+			</td>
+		</tr>
+		%{ 
+			for(int i=1; i<poll.answers.size(); i++) {
+		}%
+			<tr>
+				<td>
+					<a href="javascript:;" onclick="remove(this);" title="remove">
+						<i class="icon-remove"></i>
+					</a>
+				</td>
+				<td>
+					Parameter #${i + 1}
+				</td>
+				<td>
+					<input type="text" name="parameter" value="${poll.answers.get(i).name}"/>
+				</td>
+			</tr>
+		%{
+			}
+		}%
+		<tbody id="parameters">
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					&nbsp;
+				</td>
+				<td align="right">
+					<button type="submit" class="btn btn-danger">Update</button>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</form>
+<div id="popUp" style="display:none;"></div>
+<script type="text/javascript">
+<!-- 
+
+	Delete = function(){
+		if(confirm("Are you sure to delete this poll?")){
+			var pollId = $('#edit input[name="pollId"]').val();
+			$.post('@{ delete }', {pollId:pollId}, function(response){
+				$.colorbox.close();	
+			});
+		}
+	}
+	$('#edit button[type="submit"]').click(function(){
+		var category = $.trim($('#edit input[name="category"]').val());
+		if(category == ""){
+			alert("Please choose category!");
+			$('#edit input[name="category"]').focus();
+			return false;
+		}
+		var name = $.trim($('#edit input[name="name"]').val());
+		if(name == ""){
+			alert("Please insert poll name!");
+			$('#edit input[name="name"]').focus();
+			return false;
+		}
+		var parameter = $.trim($('#edit input[name="parameter"]').val());
+		if(parameter == ""){
+			alert("Please insert parameter #1 value!");
+			$('#edit input[name="parameter"]').focus();
+			return false;
+		}
+		
+		var parameters = [];
+		$('#edit input[name="parameter"]').each(function(){
+			if($(this).val() != ""){
+				parameters.push($(this).val());
+			}
+		});
+		
+		var pollId = $('#edit input[name="pollId"]').val();
+		var menuId = $('#edit input[name="category"]').attr("menu-id");
+		var description = $('#edit textarea[name="description"]').val();
+		
+		$.post('@{ editImpl }',{ pollId:pollId, menuId:menuId, name:name, description:description, parameters:parameters }, function(response){
+			$.colorbox.close();
+		});
+		
+	});
+
+	loadFromTree();
+	
+	function loadFromTree(){
+		$.post('@{ tree.Index.index() }',function(response){
+			$("#popUp").empty();
+			$("#popUp").append(response);
+		});
+		$('input[name="category"]').popupDiv("#popUp");
+	}
+
+	add = function(){
+		var tr = '<tr>' +
+					 '<td width="5%">' +
+						'<a href="javascript:;" onclick="remove(this);" title="remove this">' +
+							'<i class="icon-remove"></i>' +
+						'</a>' +
+					 '</td>' +
+					 '<td id="index">' +
+						' &nbsp;' +
+					 '</td>' +  
+					 '<td>' +
+						'<input type="text" name="parameter"></input>' +
+					 '</td>' +
+				 '</tr>';		 
+		$('#parameters').append(tr);
+		indexing();
+	}
+	remove = function(elem){
+		$(elem).parent().parent().remove();
+		indexing();
+	}
+	function indexing(){
+		var i = 1;
+		$('#parameters td[id="index"]').each(function(){
+			i++;
+			$(this).html("Parameter #" + String(i));
+		});
+	}
+-->
+</script>

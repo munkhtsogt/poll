@@ -1,0 +1,103 @@
+#{form @addImpl(), enctype:'multipart/form-data', class: 'well'}
+	<legend> Add news </legend>
+	<table width="100%">
+		<tr>
+			<td>
+				Title
+			</td>
+			<td>
+				<input type="text" name="title" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Date
+			</td>
+			<td>
+				<input type="text" name="date" valid="date"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Picture
+			</td>
+			<td>
+				<input type="file" name="picture" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Link
+			</td>
+			<td>
+				<input type="text" name="link" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Description
+			</td>
+			<td>
+				<textarea cols=50 id="description" name="description"></textarea>
+			</td>
+		</tr>
+		<tfoot>
+			<tr>
+				<td>
+					&nbsp;
+				</td>
+				<td align="right">
+					<button type="submit" class="btn btn-danger">Save</button>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+#{/form}
+<script type="text/javascript">
+<!--
+	$(function(){
+		$('#description').markItUp(mySettings);	
+	});
+	
+	$('input[valid="date"]').each(function(){
+	    var $this =$(this);
+	    $this.datepicker({
+		    dateFormat: 'yy-mm-dd',
+		    defaultDate: 0,
+		    firstDay: 1
+		});
+	});
+	/*
+	$('#add button[type="submit"]').click(function(){
+		
+		var title = $.trim($('#add input[name="title"]').val());
+    	if(title.length == 0) {
+    		alert("Please insert title!");
+    		$('#add input[name="title"]').focus();
+    		return false;
+    	}
+		
+		var valid = true;
+		$("#add").validation({
+            rules:{
+                    numeric: true,
+                    date:   true,
+            },
+            messages:{
+                    numeric: "Invalid number value!",
+                    date: "invalid date format!"
+            },
+            success: function(invalid) {
+                    valid = invalid;
+            }
+    	});
+    
+    	if (valid == false) return false;
+		
+		$.post('@{ addImpl }', $('#add').serialize(), function(){
+			$.colorbox.close();
+		});
+	})
+	*/
+-->	
+</script>

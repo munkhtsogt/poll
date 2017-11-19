@@ -1,0 +1,56 @@
+<div class="grid-container clearfix">
+	#{list polls, as: 'poll'}
+	<div class="grid">
+	    <div class="grid-rc">
+	        <a href="javascript:;" onclick="poll(${poll.id});" class="grid-oc">
+	            <div class="grid-od">
+	                <div class="grid-hg grid-box">
+	                    <img src="@{'/public/images/poll.jpg'}" width="250px" height="150px"/>
+	                    <div class="grid-caption">
+	                        <div class="caption-text">${poll.name}</div>
+	                        <div class="stars-1">
+	                            <div class="rating threestar"></div>
+	                        </div>
+	                    </div>
+	                </div>			
+	                <div class="grid-d">
+	                    <div class="grid-dw grid-box">
+	                        <div class="wrap">
+	                            <div class="small-logo">
+	                                <img src="" />
+	                            </div>
+	                            <div class="grid-h4">
+	                                <h4>${poll.name}</h4>
+	                                <div class="stars-2">
+	                                    <div class="rating threestar"></div>
+	                                </div>
+	                            </div>
+	                            <p>${poll.description}</p>
+	                        </div>
+	                        <div class="grid-b">
+	                            <span class="button button-yellow">more</span>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </a>
+	    </div>
+	</div>
+	#{/list}
+</div>
+
+<script type="text/javascript">
+<!--
+	poll = function(pollId){
+		$.colorbox({
+			href: '@{ main.Index.poll }',
+			data: {pollId:pollId},
+			width: "60%",
+			height: "100%",
+			onCleanup: function(){
+				
+			}
+		});
+	}	
+-->
+</script>

@@ -1,0 +1,103 @@
+#{extends 'admin/main.html' /}
+
+#{set title: "Admin/Unit" /}
+
+#{set 'moreStyles' }
+	<link style="text/css" rel="stylesheet" href="@{'/public/javascripts/treeview/css/jquery.treeview.css'}" />
+#{/set}
+
+#{set 'moreScripts' }
+	<script type="text/javascript" src="@{ '/public/javascripts/treeview/lib/jquery.treeview.js' }"></script>
+#{/set}	
+
+<h2>Create poll categories</h2>
+
+<br />
+
+<a href="javascript:;" onclick="create(0);" class="btn btn-success">Create</a>
+
+<br />
+<br />
+
+<div>
+	<ul id="tree"></ul>
+</div>
+
+
+<script type="text/javascript">
+<!--
+	load();
+	
+	function load(){
+		
+		$.post('@{list}', function(response){
+			$('#tree').empty();
+			$('#tree').append(response);
+		});
+		
+		$("#tree").treeview();
+		
+	}
+	
+	subs = function(elem, menuId){
+		
+		$("#tree li a").each(function(){
+			$(this).attr("style", "color:black;");
+		})
+		
+		$(elem).attr("style","color:red;");
+		var parentLi = $(elem).parent();
+		$.post('@{ subs() }', { menuId: menuId }, function(response) {
+			if(response != null ) {
+				parentLi.find("#sub").empty();
+				var ul = document.createElement('ul');
+				$(ul).attr('id', 'sub');
+				for (var i=0; i<response.length; i++) {
+					var menu = response[i];
+					var li = document.createElement('li');
+					$(li).append('<a href="javascript:;" onclick="subs(this, ' + menu.id + ');" style="color: black;">' + menu.name + '</a>');
+					$(li).append('<a href="javascript:;" onclick="create(' + menu.id + ');"  title="add submenu">'
+									+ '<i class="icon-plus icon-large" style="margin-top:8px"></i>'
+							   + '</a>');
+					$(li).append('<a href="javascript:;" onclick="edit(' + menu.id + ');"  title="edit menu">'
+						 			+ '<i class="icon-edit icon-large" style="margin-top:8px"></i>'
+							   + '</a>');
+					$(ul).append(li);
+				}
+				parentLi.append(ul);
+			}
+		}, 'json');
+	};
+	
+	create = function(menuId){
+		$.colorbox({
+			href: '@{ add }',
+			data: { menuId:menuId },
+			width:500,
+			height:240,
+			onCleanup: function() {
+				$.post('@{list}', function(response){
+					$('#tree').empty();
+					$('#tree').append(response);
+				});
+			}	
+		});
+	}
+	
+	edit = function(menuId){
+		$.colorbox({
+			href: '@{ edit }',
+			data: { menuId:menuId },
+			width:500,
+			height:240,
+			onCleanup: function() {
+				$.post('@{ list }', function(response){
+					$('#tree').empty();
+					$('#tree').append(response);
+				})
+			}	
+		});
+	}
+	
+-->
+</script>

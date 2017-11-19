@@ -1,0 +1,28 @@
+#{list subs, as: 'sub'}
+	<li>
+		<div>
+			<a href="javascript:;" onclick="sub(this, '${sub.id}');">${sub.name}</a>
+		</div>
+	</li>
+#{/list}
+
+<script type="text/javascript">
+<!--
+	sub = function(elem, subId){
+	
+		#{if user }
+			$('#create').removeClass('chosen');
+		#{/if}
+		
+		$('.accordion').removeClass('open');
+		$(elem).parent().parent().parent().find('li div').each(function(){
+			$(this).removeClass("chosen");
+		})
+		$(elem).parent().attr("class", 'chosen');
+		$.post('@{ main.Index.polls }', { menuId: subId }, function(response){
+			$('#content').empty();
+			$('#content').append(response);
+		})
+	}
+-->
+</script>

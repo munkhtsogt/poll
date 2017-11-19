@@ -1,0 +1,64 @@
+<form id="edit" onsubmit="return false;" class="well">
+	<legend>Edit user</legend>
+	<table width="100%">
+		<tr>
+			<td>
+				Name:
+			</td>
+			<td>
+				<input type="hidden" name="userId" value="${user.id}" />
+				<input type="text" name="name" value="${user.name}"/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Email:
+			</td>
+			<td>
+				<input type="text" name="email" valid="email" value="${user.email}"/>
+			</td>
+		</tr>
+		<tr>
+            <td colspan="2" id="notif">
+            </td>
+        </tr>
+		<tr>
+			<td>
+				&nbsp;
+			</td>
+			<td align="right">
+				<button type="submit" class="btn btn-danger">Update</button>
+			</td>
+		</tr>
+	</table>
+</form>
+
+<script type="text/javascript">
+<!--
+
+	$('#edit button[type="submit"]').click(function(){
+		var valid = true;
+        $("#edit").validation({
+                rules:{
+                        email:  true,
+                        numeric: true,
+                        date:   true,
+                },
+                messages:{
+                        email:  "Invalid email address!",
+                        numeric: "Invalid number value!",
+                        date: "Invalid date!"
+                },
+                success: function(invalid) {
+                        valid = invalid;
+                }
+        });
+        
+        if (valid == false) return false;
+        
+		$.post('@{ editImpl }', $('#edit').serialize() ,function(response){
+			$.colorbox.close();
+		})
+	});
+-->
+</script>

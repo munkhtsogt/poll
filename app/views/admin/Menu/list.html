@@ -1,0 +1,11 @@
+#{list menus, as: 'menu'}
+<li>
+	<a href="javascript:;" onclick="subs(this, '${menu.id}');" style="color: black;">${menu.name}</a>
+	<a href="javascript:;" onclick="create('${menu.id}');"  title="add submenu">
+		<i class="icon-plus icon-large" style="margin-top:8px"></i>
+	</a>
+	<a href="javascript:;" onclick="edit('${menu.id}');"  title="edit menu">
+		<i class="icon-edit icon-large" style="margin-top:8px"></i>
+	</a>
+</li>
+#{/list}

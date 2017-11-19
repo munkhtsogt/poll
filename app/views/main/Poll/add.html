@@ -1,0 +1,141 @@
+<form id="add" onsubmit="return false;" class="well">
+	<table width="100%">
+		<tr>
+			<td width="5%">
+				&nbsp;
+			</td>
+			<td>
+				Category
+			</td>
+			<td>
+				<input type="text" name="category" id="category"/>
+			</td>
+		</tr>
+		<tr>
+			<td width="5%">
+				&nbsp;
+			</td>
+			<td>
+				Poll name
+			</td>
+			<td>
+				<input type="text" name="name" />
+			</td>
+		</tr>
+		<tr>
+			<td width="5%">
+				&nbsp;
+			</td>
+			<td>
+				Description
+			</td>
+			<td>
+				<textarea name="description"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td width="5%">
+				<a href="javascript:;" onclick="add();" title="add more">
+					<i class="icon-plus"></i>
+				</a>
+			</td>
+			<td>
+				Parameter #1
+			</td>
+			<td>
+				<input type="text" name="parameter"/>
+			</td>
+		</tr>
+		<tbody id="parameters">
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					&nbsp;
+				</td>
+				<td align="right">
+					<button type="submit" class="btn btn-danger">Save</button>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</form>
+<div id="popUp" style="display:none;"></div>
+<script type="text/javascript">
+<!-- 
+	$('#add button[type="submit"]').click(function(){
+		var category = $.trim($('#add input[name="category"]').val());
+		if(category == ""){
+			alert("Please choose category!");
+			$('#add input[name="category"]').focus();
+			return false;
+		}
+		var name = $.trim($('#add input[name="name"]').val());
+		if(name == ""){
+			alert("Please insert poll name!");
+			$('#add input[name="name"]').focus();
+			return false;
+		}
+		var parameter = $.trim($('#add input[name="parameter"]').val());
+		if(parameter == ""){
+			alert("Please insert parameter #1 value!");
+			$('#add input[name="parameter"]').focus();
+			return false;
+		}
+		
+		var parameters = [];
+		$('#add input[name="parameter"]').each(function(){
+			if($(this).val() != ""){
+				parameters.push($(this).val());
+			}
+		});
+		
+		var menuId = $('#add input[name="category"]').attr("menu-id");
+		var description = $('#add textarea[name="description"]').val();
+		
+		$.post('@{ main.Poll.addImpl }',{ menuId:menuId, name:name, description:description, parameters:parameters }, function(response){
+			$.colorbox.close();
+		});
+		
+	});
+
+	loadFromTree();
+	
+	function loadFromTree(){
+		$.post('@{ tree.Index.index() }',function(response){
+			$("#popUp").empty();
+			$("#popUp").append(response);
+		});
+		$('input[name="category"]').popupDiv("#popUp");
+	}
+
+	add = function(){
+		var tr = '<tr>' +
+					 '<td width="5%">' +
+						'<a href="javascript:;" onclick="remove(this);" title="remove this">' +
+							'<i class="icon-remove"></i>' +
+						'</a>' +
+					 '</td>' +
+					 '<td id="index">' +
+						' &nbsp;' +
+					 '</td>' +  
+					 '<td>' +
+						'<input type="text" name="parameter"></input>' +
+					 '</td>' +
+				 '</tr>';		 
+		$('#parameters').append(tr);
+		indexing();
+	}
+	remove = function(elem){
+		$(elem).parent().parent().remove();
+		indexing();
+	}
+	function indexing(){
+		var i = 1;
+		$('#parameters td[id="index"]').each(function(){
+			i++;
+			$(this).html("Parameter #" + String(i));
+		});
+	}
+-->
+</script>

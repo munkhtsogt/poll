@@ -1,0 +1,46 @@
+# Default CRUD messages
+# ~~~~~~
+
+crud.title=Administration
+crud.home=Home
+crud.blank=Шинэ
+crud.index.title=Choose the object to edit
+crud.index.objectType=Object type
+crud.index.action=
+crud.index.add= +
+crud.add=+ &{%s}
+crud.list.title=&{%s}
+crud.list.size=%d &{%s}
+crud.list.totalSize=%d нийт
+crud.pagination.previous=« Нэг өмнөх
+crud.pagination.next=Дараах »
+crud.pagination.last=Өмнөх »»
+crud.pagination.first=«« Эхлэл
+crud.show.title= &{%s} засах
+crud.save= Хадгалах
+crud.saveAndContinue=Хадгалах үргэжлүүлэх өөрчлөх
+crud.cancel=Болих
+crud.hasErrors=Please correct errors
+crud.blank.title= &{%s}
+crud.saveAndAddAnother=Хадгалах дахин нэгийг нэмэх
+crud.delete= &{%s}-г устгах
+crud.created= &{%s} нэмэгдлээ
+crud.saved= &{%s} өөрчлөгдлөө
+crud.deleted= &{%s} устгагдлаа
+crud.delete.error=Устгах боломжгүй
+crud.search=Хайх
+crud.none=(None)
+crud.selectValue=(Сонголт хийнэ үү)
+ 
+crud.help.required=Бөглөнөүү
+crud.help.minlength=Min length is %d.
+crud.help.maxlength=Max length is %d.
+crud.help.email=Valid email address.
+crud.help.dateformat=&{%s} format.
+crud.help.numeric=Numeric.
+crud.help.min=Must be greater than %d.
+crud.help.future=In the future.
+crud.help.past=In the past.
+crud.help.after=After %s.
+crud.help.before=Before %s.
+crud.help.range=Between %d and %d

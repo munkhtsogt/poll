@@ -1,0 +1,16 @@
+#{extends 'admin/generic.html' /}
+
+#{set title:'login' /}
+
+
+<div style="margin-left: 35%;">
+	<div style="padding: 5px; width:480px">
+		<form id="login" action="@{ login() }" method="POST" class="well">
+			<input type="text" placeholder="email" name="email">
+			<input type="password" placeholder="password" name="password">
+			<div align="right">
+				<button type="submit" class="btn">login</button>
+			</div>
+		</form>
+	</div>	
+</div>

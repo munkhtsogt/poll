@@ -1,0 +1,78 @@
+<div class="center">
+	<form id="signup" onsubmit="return false;">
+		<h2 align="center">Sign Up</h2>
+		<table>
+			<tr>
+				<td>
+					Name:
+				</td>
+				<td>
+					<input type="text" name="name" />
+				</td>	
+			</tr>
+			<tr>
+				<td>
+					Email:
+				</td>
+				<td>
+					<input type="text" name="email" valid="email"/>
+				</td>	
+			</tr>
+			<tr>
+				<td>
+					Password:
+				</td>
+				<td>
+					<input type="password" name="password"  />
+				</td>	
+			</tr>
+			<tfoot>
+				<tr>
+					<td colspan="2" align="right">
+						<button type="submit">Submit</button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div id="error" class="w3-red" style="display: none;">
+					  		<h3>Warning!</h3>
+						  	<p>User exists!</p>
+						</div> 
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</form> 
+</div>
+<script type="text/javascript">
+	$('#signup button[type="submit"]').click(function(){
+		var name = $.trim($('#signup input[name="name"]').val());
+		var email = $.trim($('#signup input[name="email"]').val());
+		var password = $.trim($('#signup input[name="password"]').val());
+		
+		if(name.length == 0){
+			$('#signup input[name="name"]').addClass('red').focus();
+			return false;
+		}
+		
+		if(email.length == 0){
+			$('#signup input[name="email"]').addClass('red').focus();
+			return false;
+		}
+		
+		if(password.length == 0){
+			$('#signup input[name="password"]').addClass('red').focus();
+			return false;
+		}
+		$.post('@{ main.Index.signupHandler }', $('#signup').serialize(), function(response){
+			if(response == 1){
+				$.colorbox.close();
+				window.location.reload();
+			}
+			else {
+				$('#error').show();
+				return false;
+			}
+		})		
+	});
+</script>

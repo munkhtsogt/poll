@@ -1,0 +1,64 @@
+#{if users }
+	#{list users, as: 'user'}
+		<tr>
+			<td>
+				<a href="javascript:;" onclick="Delete(${user.id});">
+					<i class="icon-trash icon-large"></i>
+				</a>
+				<a href="javascript:;" onclick="Edit(${user.id});">
+					<i class="icon-edit icon-large"></i>
+				</a>
+			</td>
+			<td>
+				${user_index}
+			</td>
+			<td>
+				${user.name}
+			</td>
+			<td>
+				${user.email}
+			</td>
+		</tr>
+	#{/list}
+#{/if}
+
+<script type="text/javascript">
+<!--
+	$(function(){
+	    $('#page').empty();
+	    for (var i=1; i<=parseInt("${num_pages}", 10); i++)     
+			$('#page').append('<option value="'+ i +'">' + i + '</option>');
+		if (parseInt("${num_pages}", 10) == 0) $('#page').html('<option value="1">1</option>');
+		$('#page').val("${page}");
+	});
+	
+	Delete = function(userId){
+		if(confirm("Are you sure to delete this user?")){
+			$.post('@{ delete }', {userId:userId}, function(){
+				var page = $("#page :selected").val();
+		        var page_size = $("#page-size :selected").val();
+		        $.post('@{ users }', { page_size:page_size, page:page } ,function(response) {
+		        	$('#users').empty();
+		        	$('#users').html(response);
+		        });
+			});
+		}
+	}
+	Edit = function(userId){
+		$.colorbox({
+			href: '@{ edit }',
+			data: {userId: userId},
+			width: 500,
+			height: 300,
+			onCleanup: function(){
+				var page = $("#page :selected").val();
+		        var page_size = $("#page-size :selected").val();
+		        $.post('@{ users }', { page_size:page_size, page:page } ,function(response) {
+		        	$('#users').empty();
+		        	$('#users').html(response);
+		        });
+			}
+		})
+	}
+-->
+</script>

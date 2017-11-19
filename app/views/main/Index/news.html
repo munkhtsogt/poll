@@ -1,0 +1,50 @@
+<div class="grid-container clearfix">
+	#{list newses, as: 'news'}
+	<div class="grid">
+	    <div class="grid-rc">
+	        <a href="javascript:;" onclick="more(${news.id});" class="grid-oc">
+	            <div class="grid-od">
+	                <div class="grid-hg grid-box">
+	                    <img src="@{getNewsPicture(news.id)}" width="250px" height="150px"/>
+	                    <div class="grid-caption">
+	                        <div class="caption-text">${news.title}</div>
+	                    </div>
+	                </div>			
+	                <div class="grid-d">
+	                    <div class="grid-dw grid-box">
+	                        <div class="wrap">
+	                            <div class="small-logo">
+	                                <img src="" />
+	                            </div>
+	                            <div class="grid-h4">
+	                                <h4>${news.title}</h4>
+	                            </div>
+	                            <p>${news.description}</p>
+	                        </div>
+	                        <div class="grid-b">
+	                            <span class="button button-yellow">more</span>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </a>
+	    </div>
+	</div>
+	#{/list}
+</div>
+
+<script type="text/javascript">
+<!--
+	more = function(news_id){
+		$.colorbox({
+			href: '@{ main.Index.newsmore }',
+			data: {newsId:news_id},
+			width: "60%",
+			height: "100%",
+			onCleanup: function(){
+				
+			}
+		});
+	}	
+-->
+</script>

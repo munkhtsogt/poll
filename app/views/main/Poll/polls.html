@@ -1,0 +1,59 @@
+#{if polls }
+	#{list polls, as: 'poll'}
+		<tr>
+			<td>
+				<a href="javascript:;" onclick="edit(${poll.id});" title="edit">
+					<i class="icon-edit icon-large"></i>
+				</a>
+				<a href="javascript:;" onclick="details(${poll.id});" title="details">
+					<i class="icon-list-ul icon-large"></i>
+				</a>
+			</td>
+			<td>
+				${poll_index}
+			</td>
+			<td>
+				${poll.category.name}
+			</td>
+			<td>
+				${poll.name}
+			</td>
+			<td>
+				${poll.description}
+			</td>
+		</tr>
+	#{/list}
+
+<script type="text/javascript">
+<!--
+	edit = function(pollId){
+		$.colorbox({
+			href: '@{ main.Poll.edit }',
+			data: { pollId: pollId},
+			width: "45%",
+			height: "90%",
+			onCleanup: function(){
+				var page = $("#page :selected").val();
+		        var page_size = $("#page-size :selected").val();
+		        $.post('@{ main.Poll.polls }', { page_size:page_size, page:page } ,function(response) {
+		        	$('#polls').empty();
+		        	$('#polls').html(response);
+		        });
+			}
+		})
+	}
+	details = function(pollId){
+		$.colorbox({
+			href: '@{ main.Poll.detail }',
+			data: { pollId: pollId},
+			width: "45%",
+			height: "90%",
+			onCleanup: function(){
+			}
+		})
+	}
+-->
+</script>
+
+
+#{/if}

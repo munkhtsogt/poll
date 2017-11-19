@@ -1,0 +1,56 @@
+<form id="edit" onsubmit="return false;" class="well">
+	<div align="right">	
+		<a href="javascript:;" onclick="remove(${menu.id});" title="delete"><i class="icon-trash icon-large"></i></a>
+	</div>
+	<table width="100%">
+		<tr>
+			<td>
+				Name
+			</td>
+			<td>
+				<input type="hidden" name="menuId" value="${menu.id}" />
+				<input type="text" name="name" value="${menu.name}"/>
+				<div id="error">
+				</div>
+			</td>
+		</tr>
+		<tfoot>
+			<tr>
+				<td>
+					&nbsp;
+				</td>
+				<td align="right">
+					<button type="submit" class="btn btn-primary">Update</button>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</form>
+
+<script type="text/javascript">
+<!--
+	$('#edit button[type="submit"]').click(function(){
+		var menuId = $('#edit input[name="menuId"]').val();
+		var name = $.trim($('#edit input[name="name"]').val());
+		if(name == ""){
+			$('#edit input[name="name"]').attr("style", "border-color:red");
+			var p = document.createElement("p");
+			$(p).attr("style", "color: red");
+			$(p).html("Name must be specified!");
+			$('#error').empty();
+			$('#error').append(p);;
+			return false;
+		}
+		$.post('@{ editImpl }', { menuId:menuId, name:name }, function(){
+			$.colorbox.close();
+		});
+	});
+	remove = function(menuId){
+		if(confirm("Are you sure to delete?")){
+			$.post(' @{ delete } ', { menuId:menuId }, function(){
+				$.colorbox.close();
+			})
+		}
+	}
+-->
+</script>

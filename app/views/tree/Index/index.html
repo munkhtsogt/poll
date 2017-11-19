@@ -1,0 +1,72 @@
+<div id="wrapper">
+	<div align="right">
+		<a href="javascript:;" onclick="closePopUp();"><i class="icon-remove-sign"></i></a>
+	</div>
+	<form id="form" onsubmit="return false;" class="well">
+		<legend>Choose category</legend>	
+		<table width="100%">
+			<tr>
+				<td>
+					<ul id="tree"></ul>
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+<!--
+	load();
+	
+	function load(){
+		
+		$.post('@{ list }', function(response){
+			$('#tree').empty();
+			$('#tree').append(response);
+		});
+		
+	}
+	
+	subs = function(elem, menuId){
+		
+		$("#tree li a").each(function(){
+			$(this).attr("style", "color:black;");
+		})
+		
+		$(elem).attr("style","color:red;");
+		var parentLi = $(elem).parent();
+		$.post('@{ admin.Menu.subs() }', { menuId: menuId }, function(response) {
+			if(response != null ) {
+				parentLi.find("#sub").empty();
+				var ul = document.createElement('ul');
+				$(ul).attr('id', 'sub');
+				for (var i=0; i<response.length; i++) {
+					var menu = response[i];
+					var li = document.createElement('li');
+					$(li).attr("menu-id", menu.id);
+					$(li).append('<a href="javascript:;" onclick="subs(this, ' + menu.id + ');" command="menu" style="color: black;">' + menu.name + '</a>');
+					$(ul).append(li);
+				}
+				parentLi.append(ul);
+			}
+		}, 'json');
+	};
+	
+	$('#tree a[command="menu"]').live('dblclick', function() {
+		var inputId = $('#popUp').attr("input-id");
+		var menuId = $(this).parent().attr("menu-id");
+		
+		$.post('@{tree.index.menuName}', {menuId: menuId} ,function(response){
+			if(response != null){
+				var unitName = response.name;
+				$('#' + inputId).val(unitName);
+				$('#' + inputId).attr("menu-id", menuId);
+				$("#popUp").hide();
+			}
+		}, 'json')
+	});
+	function closePopUp(){
+		$("#popUp").hide();
+	}
+-->
+</script>

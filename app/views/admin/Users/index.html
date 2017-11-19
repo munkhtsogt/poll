@@ -1,0 +1,152 @@
+#{extends 'admin/main.html' /}
+
+#{set title: 'Admin/Users' /}
+
+<a href="javascript:;" onclick="create();" class="btn btn-success">Create</a>
+
+<br />
+<br />
+
+<table width="100%" class="table table-bordered" id="userTable">
+	<tr>
+		<th width="10%">
+			&nbsp;
+		</th>
+		<th width="5%">
+			№
+		</th>
+		<th>
+			<a href="javascript:;" onclick="sorting(this);" parameter="age">Name</a>
+		</th>
+		<th>
+			<a href="javascript:;" onclick="sorting(this);" parameter="email">Email</a>
+		</th>
+	</tr>
+	<tr>
+		<th>
+			&nbsp;
+		</th>
+		<th>
+			&nbsp;
+		</th>
+		<th>
+			<input type="text" name="filters" parameter="name" placeholder="Name" style="height:28px"/>
+		</th>
+		<th>
+			<input type="text" name="filters" parameter="email" placeholder="Email" style="height:28px"/>
+		</th>
+	</tr>
+	<tbody id="users">
+	</tbody>
+</table>
+<table width="100%" >
+   <tr>
+      <td style="font-size:13px;">
+           Page size:
+	       <select id="page-size" style="width:50px; font-size:12px;">
+	               <option value="25">25</option>
+	               <option value="50">50</option>
+	               <option value="75">75</option>
+	               <option value="100">100</option>
+	       </select>
+      </td>
+      <td align="right">
+            Page: 
+	        <select id="page" style="width: 50px; font-size:12px;">
+	          <option value="1">1</option>
+	        </select>   
+      </td>
+   </tr>
+</table>
+<script type="text/javascript">
+<!--
+	load();
+	
+	function load(){
+        var page = $("#page :selected").val();
+        var page_size = $("#page-size :selected").val();
+        $.post('@{ users }', { page_size:page_size, page:page } ,function(response) {
+        	$('#users').empty();
+        	$('#users').html(response);
+        });
+	}
+	create = function(){
+		$.colorbox({
+			href: '@{ add }',
+			width: 500,
+			height: 340,
+			onCleanup: function(){
+				load();
+			}
+		})
+	}
+	$("#page-size").live("change", function(){
+        var $this = $(this);
+        var page = $("#page :selected").val();
+        $.post('@{ users }', {page_size:$this.val(), page:page} ,function(response) {
+        	$('#users').empty();
+        	$('#users').html(response);
+        });
+	});
+	
+	$("#page").live("change", function(){
+        var $this = $(this);
+        var page_size = $("#page-size :selected").val();
+        $.post('@{ users }', {page_size:page_size, page:$this.val()} ,function(response) {
+        	$('#users').empty();
+        	$('#users').html(response);
+        });
+	});
+	$('#userTable input[name="filters"]').each(function()
+    {
+        var $this = $(this);
+        $this.keyup(function(event){
+           if(event.keyCode == 13)
+           {
+                   var queries = [];
+                   var parameters = [];
+                   $('#userTable input[name="filters"]').each(function() {
+                           if($(this).val() != ""){
+                                   queries.push($(this).val());
+                                   parameters.push($(this).attr("parameter"));
+                           }
+                   });
+                   var userIds = [];
+                   var page_size = $("#page-size :selected").val();
+                   var page = $("#page :selected").val();
+                   $.post('@{ search }', { queries: queries, parameters:parameters}, function(response){
+                           for(var i=0; i<response.length; i++) userIds.push(response[i].id);
+                           $.post('@{ users() }', { userIds: userIds, page_size:page_size, page:page },function(response) {
+                               $('#users').empty();    
+                        	   $('#users').html(response);
+                           });
+                   }, 'json');
+           }
+        });
+    });  
+	var click = 0;
+    function sorting(elem){ 
+        click++;
+        var parameter = $(elem).attr("parameter");
+        if(click % 2 == 0){
+                if($(elem).parent().find('i[class="icon-sort-up"]')[0]) $(elem).parent().find('i[class="icon-sort-up"]').remove();
+                $(elem).append('<i class="icon-sort-down"></i>');
+        }
+        else {
+                if($(elem).parent().find('i[class="icon-sort-down"]')[0]) $(elem).parent().find('i[class="icon-sort-down"]').remove();
+                $(elem).append('<i class="icon-sort-up"></i>');
+        }
+        var userIds = [];
+        var page_size = $("#page-size :selected").val();
+        var page =  $('#page :selected').val();
+        
+        $.post('@{ sorting }', {parameter: parameter, click:click} ,function(response){
+             for(var i=0; i<response.length; i++) userIds.push(response[i].id);
+             $.post('@{ users() }', { userIds: userIds, page_size:page_size, page:page },function(response) {
+                 $('#users').empty();    
+            	 $('#users').html(response);
+             });
+        }, 'json');
+    }
+-->
+</script>

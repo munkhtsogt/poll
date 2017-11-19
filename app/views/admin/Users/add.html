@@ -1,0 +1,71 @@
+<form id="add" onsubmit="return false;" class="well">
+	<legend>Add user</legend>
+	<table width="100%">
+		<tr>
+			<td>
+				Name:
+			</td>
+			<td>
+				<input type="text" name="name" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Age:
+			</td>
+			<td>
+				<input type="text" name="age" valid="numeric" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Email:
+			</td>
+			<td>
+				<input type="text" name="email" valid="email"/>
+			</td>
+		</tr>
+		<tr>
+            <td colspan="2" id="notif">
+            </td>
+        </tr>
+		<tr>
+			<td>
+				&nbsp;
+			</td>
+			<td align="right">
+				<button type="submit" class="btn btn-danger">Save</button>
+			</td>
+		</tr>
+	</table>
+</form>
+
+<script type="text/javascript">
+<!--
+
+	$('#add button[type="submit"]').click(function(){
+		var valid = true;
+        $("#add").validation({
+                rules:{
+                        email:  true,
+                        numeric: true,
+                        date:   true,
+                },
+                messages:{
+                        email:  "Invalid email address!",
+                        numeric: "Invalid number value!",
+                        date: "Invalid date!"
+                },
+                success: function(invalid) {
+                        valid = invalid;
+                }
+        });
+        
+        if (valid == false) return false;
+        
+		$.post('@{ addImpl }', $('#add').serialize() ,function(response){
+			$.colorbox.close();
+		})
+	});
+-->
+</script>

@@ -1,0 +1,73 @@
+<script type="text/javascript" src="@{ '/public/javascripts/validation.js' }" charset="${_response_encoding}"></script>
+<div class="center">
+	<form id="login" onsubmit="return false;">
+		<h2 align="center">Login</h2>
+		<table>
+			<tr>
+				<td>
+					Email:
+				</td>
+				<td>
+					<input type="text" name="email" valid="email"/>
+				</td>	
+			</tr>
+			<tr>
+				<td>
+					Password:
+				</td>
+				<td>
+					<input type="password" name="password"  />
+				</td>	
+			</tr>
+			<tfoot>
+				<tr>
+					<td colspan="2" align="right">
+						<button type="submit">Submit</button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div id="error" class="w3-red" style="display: none;">
+					  		<h3>Warning!</h3>
+						  	<p>Invalid username or password.</p>
+						</div> 
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</form> 
+</div>
+<script type="text/javascript">
+	$('#login button[type="submit"]').click(function(){
+	
+		var email = $.trim($('#login input[name="email"]').val());
+		var password = $.trim($('#login input[name="password"]').val());
+		
+		if(email.length == 0){
+			$('#login input[name="email"]').focus();
+			$('#login input[name="email"]').addClass("red");
+			return false;
+		}
+		
+		$('#login input[name="email"]').removeClass("red");
+		
+		if(password.length == 0){
+			$('#login input[name="password"]').focus();
+			$('#login input[name="password"]').addClass("red");
+			return false;
+		}
+		
+		$('#login input[name="password"]').removeClass("red");
+		
+		$.post('@{ main.Index.loginHandler }', $('#login').serialize(), function(response){
+			if(response == 1){
+				$.colorbox.close();
+				window.location.reload();
+			}
+			else {
+				$('#error').show();
+				return false;
+			}
+		})		
+	});
+</script>
